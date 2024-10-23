@@ -5,5 +5,12 @@
     text-decoration: none;
 }
 h1,h2,h3,h4,h5,h6{
-    font-family: ;
+    font-family:"El Mesiri",sans-serif; ;
+}
+@font-face {
+    font-family: "Proxima Nova";
+    src: url("./font/proximanova_regular.ttf");
+}
+body{
+    font-family: "Proxima Nova";
 }
