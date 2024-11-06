@@ -43,10 +43,17 @@ nav ul {
 nav ul a {
     color: #ffffff;
     font-size: 14px;
+    padding: 5px;
+}
+nav ul a:hover{
+    background-color: darkblue;
+    border-color: #ff0000;
+    border: 2px solid ;
+    border-radius: 3px;
 }
 
 header button {
-    background-color: #018abe;
+    background-color: #ff0000;
     border-radius: 3px;
     padding: 9px 15px;
     border: none;
@@ -57,8 +64,10 @@ header button {
 }
 
 header button:hover {
-    transition: filter 1s linear;
-    filter: brightness(110%);
+    transition: filter 1.5s linear;
+    filter: brightness(150%);
+    background-color: #690064;
+    transform: scale(110%);
 }
 
 main {
@@ -102,3 +111,7 @@ main {
     font-weight: 700;
     line-height: 90px;
 }
+header img:hover{
+background-color: #690064;
+}
+
