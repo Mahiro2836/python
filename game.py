@@ -1,162 +1,127 @@
 import pygame
+import time
 import random
-
-from objects import Grumpy, Pipe, Base, Score
-
-# Setup *******************************************
-
+ 
 pygame.init()
-SCREEN = WIDTH, HEIGHT = 288, 512
-display_height = 0.80 * HEIGHT
-info = pygame.display.Info()
-
-width = info.current_w
-height = info.current_h
-
-if width >= height:
-	win = pygame.display.set_mode(SCREEN, pygame.NOFRAME)
-else:
-	win = pygame.display.set_mode(SCREEN, pygame.NOFRAME | pygame.SCALED | pygame.FULLSCREEN)
-
-# win = pygame.display.set_mode(SCREEN, pygame.SCALED | pygame.FULLSCREEN)
+ 
+white = (255, 255, 255)
+yellow = (255, 255, 102)
+black = (0, 0, 0)
+red = (213, 50, 80)
+green = (0, 255, 0)
+blue = (50, 153, 213)
+ 
+dis_width = 600
+dis_height = 400
+ 
+dis = pygame.display.set_mode((dis_width, dis_height))
+pygame.display.set_caption('Snake Game by Pythonist')
+ 
 clock = pygame.time.Clock()
-FPS = 60
-
-# COLORS
-
-RED = (255, 0, 0)
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-
-# Backgrounds
-
-bg1 = pygame.image.load('Assets/background-day.png')
-bg2 = pygame.image.load('Assets/background-night.png')
-
-bg = random.choice([bg1, bg2])
-
-im_list = [pygame.image.load('Assets/pipe-green.png'), pygame.image.load('Assets/pipe-red.png')]
-pipe_img = random.choice(im_list)
-
-gameover_img =  pygame.image.load('Assets/gameover.png')
-flappybird_img =  pygame.image.load('Assets/flappybird.png')
-flappybird_img = pygame.transform.scale(flappybird_img, (200,80))
-
-# Sounds & fx
-
-
-die_fx = pygame.mixer.Sound('Sounds/die.wav')
-hit_fx = pygame.mixer.Sound('Sounds/hit.wav')
-point_fx = pygame.mixer.Sound('Sounds/point.wav')
-swoosh_fx = pygame.mixer.Sound('Sounds/swoosh.wav')
-wing_fx = pygame.mixer.Sound('Sounds/wing.wav')
-
-# Objects
-
-pipe_group = pygame.sprite.Group()
-base = Base(win)
-score_img = Score(WIDTH // 2, 50, win)
-grumpy = Grumpy(win)
-
-# Variables
-
-base_height = 0.80 * HEIGHT
-speed = 0
-game_started = False
-game_over = False
-restart = False
-score = 0
-start_screen = True
-pipe_pass = False
-pipe_frequency = 1600
-
-running =  True
-while running:
-	win.blit(bg, (0,0))
-	
-	if start_screen:
-		speed = 0
-		grumpy.draw_flap()
-		base.update(speed)
-		
-		win.blit(flappybird_img, (40, 50))
-	else:
-		
-		if game_started and not game_over:
-			
-			next_pipe = pygame.time.get_ticks()
-			if next_pipe - last_pipe >= pipe_frequency:
-				y = display_height // 2
-				pipe_pos = random.choice(range(-100,100,4))
-				height = y + pipe_pos
-				
-				top = Pipe(win, pipe_img, height, 1)
-				bottom = Pipe(win, pipe_img, height, -1)
-				pipe_group.add(top)
-				pipe_group.add(bottom)
-				last_pipe = next_pipe
-		
-		pipe_group.update(speed)
-		base.update(speed)	
-		grumpy.update()
-		score_img.update(score)
-		
-		if pygame.sprite.spritecollide(grumpy, pipe_group, False) or grumpy.rect.top <= 0:
-			game_started = False
-			if grumpy.alive:
-				hit_fx.play()
-				die_fx.play()
-			grumpy.alive = False
-			grumpy.theta = grumpy.vel * -2
-	
-		if grumpy.rect.bottom >= display_height:
-			speed = 0
-			game_over = True
-	
-		if len(pipe_group) > 0:
-			p = pipe_group.sprites()[0]
-			if grumpy.rect.left > p.rect.left and grumpy.rect.right < p.rect.right and not pipe_pass and grumpy.alive:
-				pipe_pass = True
-	
-			if pipe_pass:
-				if grumpy.rect.left > p.rect.right:
-					pipe_pass = False
-					score += 1
-					point_fx.play()
-					
-	if not grumpy.alive:
-		win.blit(gameover_img, (50,200))
-		
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			running = False
-		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_ESCAPE or \
-				event.key == pygame.K_q:
-				running = False
-		if event.type == pygame.MOUSEBUTTONDOWN:
-			if start_screen:
-				game_started = True
-				speed = 2
-				start_screen = False
-
-				game_over = False
-			#	grumpy.reset()
-				last_pipe = pygame.time.get_ticks() - pipe_frequency
-				next_pipe = 0
-				pipe_group.empty()
-				
-				speed = 2
-				score = 0
-				
-			if game_over:
-				start_screen = True
-				grumpy = Grumpy(win)
-				pipe_img = random.choice(im_list)
-				bg = random.choice([bg1, bg2])
-				
-			
-
-	clock.tick(FPS)
-	pygame.display.update()
-pygame.quit()
+ 
+snake_block = 10
+snake_speed = 15
+ 
+font_style = pygame.font.SysFont("bahnschrift", 25)
+score_font = pygame.font.SysFont("comicsansms", 35)
+ 
+ 
+def Your_score(score):
+    value = score_font.render("Your Score: " + str(score), True, yellow)
+    dis.blit(value, [0, 0])
+ 
+ 
+ 
+def our_snake(snake_block, snake_list):
+    for x in snake_list:
+        pygame.draw.rect(dis, black, [x[0], x[1], snake_block, snake_block])
+ 
+ 
+def message(msg, color):
+    mesg = font_style.render(msg, True, color)
+    dis.blit(mesg, [dis_width / 6, dis_height / 3])
+ 
+ 
+def gameLoop():
+    game_over = False
+    game_close = False
+ 
+    x1 = dis_width / 2
+    y1 = dis_height / 2
+ 
+    x1_change = 0
+    y1_change = 0
+ 
+    snake_List = []
+    Length_of_snake = 1
+ 
+    foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+    foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+ 
+    while not game_over:
+ 
+        while game_close == True:
+            dis.fill(blue)
+            message("You Lost! Press C-Play Again or Q-Quit", red)
+            Your_score(Length_of_snake - 1)
+            pygame.display.update()
+ 
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_q:
+                        game_over = True
+                        game_close = False
+                    if event.key == pygame.K_c:
+                        gameLoop()
+ 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game_over = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    x1_change = -snake_block
+                    y1_change = 0
+                elif event.key == pygame.K_RIGHT:
+                    x1_change = snake_block
+                    y1_change = 0
+                elif event.key == pygame.K_UP:
+                    y1_change = -snake_block
+                    x1_change = 0
+                elif event.key == pygame.K_DOWN:
+                    y1_change = snake_block
+                    x1_change = 0
+ 
+        if x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0:
+            game_close = True
+        x1 += x1_change
+        y1 += y1_change
+        dis.fill(blue)
+        pygame.draw.rect(dis, green, [foodx, foody, snake_block, snake_block])
+        snake_Head = []
+        snake_Head.append(x1)
+        snake_Head.append(y1)
+        snake_List.append(snake_Head)
+        if len(snake_List) > Length_of_snake:
+            del snake_List[0]
+ 
+        for x in snake_List[:-1]:
+            if x == snake_Head:
+                game_close = True
+ 
+        our_snake(snake_block, snake_List)
+        Your_score(Length_of_snake - 1)
+ 
+        pygame.display.update()
+ 
+        if x1 == foodx and y1 == foody:
+            foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+            foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+            Length_of_snake += 1
+ 
+        clock.tick(snake_speed)
+ 
+    pygame.quit()
+    quit()
+ 
+ 
+gameLoop()
