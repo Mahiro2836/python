@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #Вызов библиотек
 from tkinter import *
 from random import randint
@@ -58,3 +59,5 @@ canvas = Canvas(root, width=300, height=300, bg="black")
 canvas.pack()
 game = Game(canvas)
 root.mainloop()
+=======
+>>>>>>> 3a919c1d113e8eaf0c88e7305c47acef9629be0e
