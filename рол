@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Любимый во Франксе</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 30px;
+      background: #f8f9fa;
+      color: #222;
+    }
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+    button {
+      display: block;
+      margin: 0 auto 30px;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      background: #ff4b5c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform .3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    .info {
+      padding: 20px;
+    }
+    .info h3 {
+      margin: 0 0 10px;
+      font-size: 1.5em;
+      color: #333;
+    }
+    .info p {
+      font-size: 1em;
+      color: #555;
+      line-height: 1.4em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Любимый во Франксе</h1>
+  <button id="toggle">Показать Франксы</button>
+  <div class="grid" id="container"></div>
+
+  <script>
+    const items = [
+      { name: 'Хиро', type: 'Персонаж', desc: 'Главный герой. Пилотирует Франкс "Стрелиция" вместе с Ноль Два.', img: 'https://i.pinimg.com/550x/35/a6/d2/35a6d243ab7531d99df810b0b54c8817.jpg' },
+      { name: 'Ноль Два', type: 'Персонаж', desc: 'Загадочная девушка с рожками. Пилотирует "Стрелицию" и зовёт Хиро "мой любимый".', img: 'https://i.pinimg.com/736x/27/13/79/27137989eed7459d8de026eb1c5b5bd6.jpg' },
+      { name: 'Итиго', type: 'Персонаж', desc: 'Командир отряда 13, пестик Франкса "Дельфиниум". Влюблена в Хиро.', img: 'https://i.pinimg.com/736x/76/f0/b4/76f0b402031e71b01a888dbcd4bb70af.jpg' },
+      { name: 'Горо', type: 'Персонаж', desc: 'Надёжный и добрый. Тычинка Франкса "Дельфиниум".', img: 'https://i.pinimg.com/originals/55/bf/07/55bf0724bb402ae30e817d5815bc9c92.jpg' },
+      { name: 'Мику', type: 'Персонаж', desc: 'Жизнерадостная, пестик Франкса "Аргентия", партнёрша Дзоромэ.', img: 'https://i.pinimg.com/originals/a6/b3/ef/a6b3ef78b7417130553bae356cee7d03.jpg' },
+      { name: 'Дзоромэ', type: 'Персонаж', desc: 'Болтливый и гиперактивный. Тычинка "Аргентии".', img: 'https://i.pinimg.com/736x/96/32/72/9632728f6e6ce4c0afabe7b56e331700.jpg' },
+      { name: 'Кокоро', type: 'Персонаж', desc: 'Мечтает стать матерью. Пестик Франкса "Гениста".', img: 'https://i.pinimg.com/736x/03/ab/d8/03abd8c1722312d2b6aebdf0ce684e36.jpg' },
+      { name: 'Мицуру', type: 'Персонаж', desc: 'Закрытый и холодный. Пилотирует "Хлорофитум".', img: 'https://i.pinimg.com/736x/e8/0f/9e/e80f9e8a3f5f3653fa478ff3c2c4a948.jpg' },
+      { name: 'Футоси', type: 'Персонаж', desc: 'Добродушный, раньше пилотировал с Кокоро, потом с Икуно.', img: 'https://i.pinimg.com/originals/01/40/2a/01402ac54312fcabde6169dbdd7684a2.png' },
+      { name: 'Икуно', type: 'Персонаж', desc: 'Сдержанная и умная. Пилотирует "Хлорофитум".', img: 'https://i.pinimg.com/originals/8e/aa/ee/8eaaeea7e4b9916549108ca88a21b57c.jpg' },
+      { name: 'Папа', type: 'Персонаж', desc: 'Председатель совета APE и лидер человечества. Носит белый халат и маску, напоминающую лицо гориллы. Истинная форма — бестелесная сущность из расы VIRM.', img: 'https://mag-with.com/FRANXX/wp-content/uploads/2018/02/df34.jpg' },
+      { name: 'APE', type: 'Организация', desc: 'Организация, управляющая человечеством. Изначально группа учёных, известных как Клуб Ламарка. Истинная цель — поглощение всего живого на планете, контролируется расой VIRM.', img: 'https://gundam-link.net/wp-content/uploads/2022/06/APE-emblem.jpg' },
+      { name: 'Стрелиция', type: 'Франкс', desc: 'Флагманский Франкс отряда 13. Пилотируется Хиро и Ноль Два.', img: 'https://i.pinimg.com/736x/8b/5e/e1/8b5ee1042d549337a5db1f17f8bf465a.jpg' },
+      { name: 'Дельфиниум', type: 'Франкс', desc: 'Франкс Итиго и Горо. Выделяется копьем.', img: 'https://i.ytimg.com/vi/4IiCWNtfTxs/maxresdefault.jpg' },
+      { name: 'Аргентия', type: 'Франкс', desc: 'Боевой Франкс Мику и Дзоромэ.', img: 'https://i.pinimg.com/736x/d0/00/6f/d0006fbfea3f99990e03ac3be232c259.jpg' },
+      { name: 'Гениста', type: 'Франкс', desc: 'Франкс Кокоро и Футоси. Основной ближний бой.', img: 'https://i.pinimg.com/736x/7a/bf/77/7abf77db668123c1cf8d1085e38e7f4b.jpg' },
+      { name: 'Хлорофитум', type: 'Франкс', desc: 'Франкс Икуно и Мицуру. Ориентирован на поддержку.', img: 'https://i.pinimg.com/736x/c1/26/a8/c126a8fa0ee5cbb11aa30e656e0c2aff.jpg' },
+      { name: 'Модель 9', type: 'Франкс', desc: 'Tип Франкса, специально сделанный для Девятого отряда', img: 'https://i.pinimg.com/originals/c1/a2/b5/c1a2b5e0c587578a9f121fcebefe8eaa.jpg' },
+      { name: '9 α', type: 'Персонаж', desc: 'паразит и официальный лидер Девятых - отряда сил специального назначения, подконтрольным APE.', img: 'https://i.pinimg.com/736x/c8/11/7b/c8117b6e4299c28a68969e7e2403d447.jpg' },
+      { name: '9 β', type: 'Персонаж', desc: 'Член элитного отряда Девятых.Подробности недоступны.', img: 'https://otakotaku.com/asset/img/character/2018/05/9-beta-5afae43ebcacbp.jpg' },
+      { name: '9 γ', type: 'Персонаж', desc: 'Как и Дельта, Гамма чрезвычайно самодовольная и высокомерная личность на поле битвы.', img: 'https://cdn.myanimelist.net/images/characters/5/446567.jpg' },
+      { name: '9 δ', type: 'Персонаж', desc: 'Она была известна как паразит, который служил в "Девятых" - отряде сил специального назначения, подконтрольном APE. Также являлась партнёром 9 ε.', img: 'https://www.postavy.cz/foto/nine-delta-foto.jpg' },
+      { name: '9 ε', type: 'Персонаж', desc: 'Член элитного отряда Девятых.Более неизвестно', img: 'https://shikimori.one/system/characters/original/161162.jpg' },
+      { name: '9 ζ', type: 'Персонаж', desc: 'Зета и идентичные пестики (Эта и Тета) - это тройняшки с белыми волосами, серыми глазами и серебряными масками.', img: 'https://thicc.mywaifulist.moe/waifus/35858/79533b21740ae1e61558dea9ce9d5cb863ce7e088ba7f3e1ae7a3576fe4b691f_thumb.png' },
+      { name: '9 η', type: 'Персонаж', desc: 'Эта и идентичные пестики (Зета и Тета) - это тройняшки с белыми волосами, серыми глазами и серебряными масками.', img: 'https://thicc.mywaifulist.moe/waifus/35858/79533b21740ae1e61558dea9ce9d5cb863ce7e088ba7f3e1ae7a3576fe4b691f_thumb.png' },
+      { name: '9 θ', type: 'Персонаж', desc: 'Тета и идентичные пестики (Зета и Эта) - это тройняшки с белыми волосами, серыми глазами и серебряными масками.', img: 'https://thicc.mywaifulist.moe/waifus/35858/79533b21740ae1e61558dea9ce9d5cb863ce7e088ba7f3e1ae7a3576fe4b691f_thumb.png' },
+    ];
+    const container = document.getElementById('container');
+    const toggleBtn = document.getElementById('toggle');
+    let showMechas = false;
+
+    function render() {
+      container.innerHTML = '';
+      items
+        .filter(item => showMechas ? item.type === 'Франкс' : item.type !== 'Франкс')
+        .forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <img src="${item.img}" alt="${item.name}">
+            <div class="info">
+              <h3>${item.name}</h3>
+              <p>${item.desc}</p>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      showMechas = !showMechas;
+      toggleBtn.textContent = showMechas ? 'Показать Персонажей' : 'Показать Франксы';
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
