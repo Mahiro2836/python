@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Любимый во Франксе</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -19,7 +19,7 @@
     }
     button {
       display: block;
-      margin: 0 auto 15px;
+      margin: 0 auto 30px;
       padding: 15px 30px;
       font-size: 1.2em;
       background: #ff4b5c;
@@ -38,7 +38,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       overflow: hidden;
-      transition: transform 0.3s;
+      transition: transform .3s;
     }
     .card:hover {
       transform: translateY(-5px);
@@ -65,18 +65,12 @@
 </head>
 <body>
   <h1>Любимый во Франксе</h1>
-  <button id="toggleFranks">Показать Франксы</button>
-  <button id="toggleReincarnation">Показать Реинкарнацию безработного</button>
+  <button id="toggle">Показать Франксы</button>
   <div class="grid" id="container"></div>
 
   <script>
     const items = [
-    { 
-     name: 'Хиро',
-     type: 'Персонаж', 
-     desc: 'Главный герой. Пилотирует Франкс "Стрелиция" вместе с Ноль Два.', 
-     img: 'https://i.pinimg.com/550x/35/a6/d2/35a6d243ab7531d99df810b0b54c8817.jpg' 
-    },
+      { name: 'Хиро', type: 'Персонаж', desc: 'Главный герой. Пилотирует Франкс "Стрелиция" вместе с Ноль Два.', img: 'https://i.pinimg.com/550x/35/a6/d2/35a6d243ab7531d99df810b0b54c8817.jpg' },
       { name: 'Ноль Два', type: 'Персонаж', desc: 'Загадочная девушка с рожками. Пилотирует "Стрелицию" и зовёт Хиро "мой любимый".', img: 'https://i.pinimg.com/736x/27/13/79/27137989eed7459d8de026eb1c5b5bd6.jpg' },
       { name: 'Итиго', type: 'Персонаж', desc: 'Командир отряда 13, пестик Франкса "Дельфиниум". Влюблена в Хиро.', img: 'https://i.pinimg.com/736x/76/f0/b4/76f0b402031e71b01a888dbcd4bb70af.jpg' },
       { name: 'Горо', type: 'Персонаж', desc: 'Надёжный и добрый. Тычинка Франкса "Дельфиниум".', img: 'https://i.pinimg.com/originals/55/bf/07/55bf0724bb402ae30e817d5815bc9c92.jpg' },
@@ -106,175 +100,32 @@
       { name: 'Нана', type: 'Персонаж', desc: 'Администратор операционного штаба APE.Ранее была пестиком во Франксе, но после гибели партнёра стала куратором отряда 13.', img: 'https://abrakadabra.fun/uploads/posts/2021-12/1640188926_61-abrakadabra-fun-p-milii-vo-frankse-subtitri-62.jpg' },
       { name: 'Хачи', type: 'Персонаж', desc: 'Куратор отряда 13, работает вместе с Наной.Спокойный и рассудительный, всегда следует инструкциям.', img: 'https://i.pinimg.com/originals/e1/fd/c6/e1fdc69ba97c3bd9edb8b308c3647c3a.jpg' },
       { name: 'Принцесса Клаксозавров', type: 'Персонаж', desc: 'Правительница вымершей расы клаксиан, глубоко связана с историей противостояния с VIRM.', img: 'https://i.pinimg.com/originals/4e/2a/4a/4e2a4a61053ecef3231c3576fed625ed.jpg' },
-      {
-    name: 'Рудеус Грейрат',
-    type: 'Реинкарнация безработного',
-    desc: 'Главный герой, переродившийся в магическом мире. Обладает выдающимися магическими способностями и стремится изменить свою жизнь к лучшему.',
-    img: 'https://pm1.aminoapps.com/8375/b704d06da4e0c3d3141d03444f79157fd964db22r1-750-750v2_hq.jpg'
-  },
-  {
-    name: 'Рокси Мигурдия',
-    type: 'Реинкарнация безработного',
-    desc: 'Наставница Рудеуса, талантливая магичка из расы мигурдов. Обладает глубокими знаниями и добрым сердцем.',
-    img: 'https://i.ytimg.com/vi/qv05x0D0JLo/maxresdefault.jpg'
-  },
-  {
-    name: 'Эрис Бореас Грейрат',
-    type: 'Реинкарнация безработного',
-    desc: 'Троюродная сестра Рудеуса, обучающаяся боевому стилю «Бог меча». Известна своим вспыльчивым характером и преданностью семье.',
-    img: 'https://i.pinimg.com/originals/f2/fa/7e/f2fa7eebbbd3f74381b79871a8dc0ba5.jpg'
-  },
-  {
-    name: 'Сильфиэтта',
-    type: 'Реинкарнация безработного',
-    desc: 'Детская подруга Рудеуса, обладающая смешанной расой человека, зверя и эльфа. Специализируется на магии воды и огня.',
-    img: 'https://i.pinimg.com/originals/c8/da/f6/c8daf69aa85ae05b12a9a5c2a859756c.jpg'
-  },
-  {
-    name: 'Орстед',
-    type: 'Реинкарнация безработного',
-    desc: 'Бог-Дракон, обладающий невероятной силой и знаниями. Враг Хитогами и союзник Рудеуса в борьбе против него.',
-    img: 'https://cs14.pikabu.ru/post_img/2022/01/02/4/og_og_1641102856233173595.jpg'
-  },
-  {
-    name: 'Хитогами',
-    type: 'Реинкарнация безработного',
-    desc: 'Таинственное божество, манипулирующее людьми через сны и видения. Имеет свои скрытые цели и мотивы.',
-    img: 'https://i.pinimg.com/originals/9a/03/aa/9a03aa94d8c00f5b91b6d26df85efc12.jpg'
-  },
-  {
-    name: 'Руиджерд Спердия',
-    type: 'Реинкарнация безработного',
-    desc: 'Воин из расы супардов, стремящийся восстановить честь своего народа. Сопровождает Рудеуса и Эрис в их путешествии.',
-    img: 'https://media.2x2tv.ru/content/images/2024/04/---10-1.jpg'
-  },
-  {
-    name: 'Нанахоши Сидзука',
-    type: 'Реинкарнация безработного',
-    desc: 'Девушка из Японии, перенесённая в магический мир. Не обладает магией, но имеет обширные знания и стремится вернуться домой.',
-    img: 'https://i.ytimg.com/vi/9uQBzMe4tX4/maxresdefault.jpg'
-  },
-  {
-    name: 'Гислен Дедорудия',
-    type: 'Реинкарнация безработного',
-    desc: 'Мастер боевых искусств из звериной расы. Наставница Эрис и преданный союзник Рудеуса.',
-    img: 'https://www.kino-teatr.ru/movie/kadr/147322/1102446.jpg'
-  },
-  {
-    name: 'Зенит Грейрат',
-    type: 'Реинкарнация безработного',
-    desc: 'Мать Рудеуса, бывшая авантюристка с навыками исцеляющей магии. Заботливая и сильная женщина.',
-    img: 'https://desu.shikimori.one/system/user_images/original/33635/2380007.jpg'
-  },
-  {
-    name: 'Пол Грейрат',
-    type: 'Реинкарнация безработного',
-    desc: 'Отец Рудеуса, опытный воин и авантюрист. Имеет сложные отношения с семьёй, но стремится защитить своих близких.',
-    img: 'https://newstisiki.com/wp-content/uploads/2021/10/e2a72ca2cc19e086b4c8af25dea4cee9-768x428.jpg'
-  },
-  {
-    name: 'Лилия Грейрат',
-    type: 'Реинкарнация безработного',
-    desc: 'Горничная семьи Грейрат, вторая жена Пола и мать Аиши. Обладает навыками боевых искусств и магии воды.',
-    img: 'https://nerdbear.com/wp-content/uploads/2021/09/Lilia-Greyrat.jpg'
-  },
-  {
-    name: 'Аиша Грейрат',
-    type: 'Реинкарнация безработного',
-    desc: 'Сестра Рудеуса, умная и целеустремлённая девочка. Обладает магическими способностями и стремится помочь своей семье.',
-    img: 'https://i.pinimg.com/736x/e8/78/c9/e878c9ed70e90c8f66cef1dcd9781332.jpg'
-  },
-  {
-    name: 'Норн Грейрат',
-    type: 'Реинкарнация безработного',
-    desc: 'Сестра Рудеуса, обладающая боевыми навыками и магией. Стремится найти своё место в мире.',
-    img: 'https://i.pinimg.com/736x/82/0c/91/820c9129adfecce501c5c9ba3ffae214.jpg'
-  },
-  {
-    name: 'Элинализ Драгонроад',
-    type: 'Реинкарнация безработного',
-    desc: 'Эльфийка, страдающая от проклятия похоти. Спутница Рудеуса в его путешествиях.',
-    img: 'https://i.pinimg.com/originals/10/7a/f7/107af79e8b0899cde90b1ac045e69dad.jpg'
-  },
-  {
-    name: 'Сара',
-    type: 'Реинкарнация безработного',
-    desc: 'Молодая авантюристка, обладающая навыками стрельбы из лука. Становится союзницей Рудеуса.',
-    img: 'https://i.pinimg.com/736x/2e/ad/e0/2eade00609beead73148f86761b8e92c.jpg'
-  },
-  {
-    name: 'Люк Нотус Грейрат',
-    type: 'Реинкарнация безработного',
-    desc: 'Дворянин и телохранитель принцессы Ариэль. Имеет сложные отношения с Рудеусом.',
-    img: 'https://otakotaku.com/asset/img/character/2023/07/luke-notos-greyrat-64a5867740616p.jpg'
-  },
-  {
-    name: 'Ариэль Анемой Асура',
-    type: 'Реинкарнация безработного',
-    desc: 'Принцесса Королевства Асура, стремящаяся занять трон. Обладает харизмой и политическим умом.',
-    img: 'https://www.kino-teatr.ru/movie/kadr/147322/1457945.jpg'
-  },
-  {
-    name: 'Киширика Киширису',
-    type: 'Реинкарнация безработного',
-    desc: 'Императрица демонов, обладающая способностью исполнять желания. Помогает Рудеусу в его пути.',
-    img: 'https://m.diskomir.ru/upload/iblock/6d9/ohn3i9clqcxdo7s6iftqg8221eur08lm/otkrytka-iz-anime-reinkarnatsiya-bezrabotnogo.jpg'
-  },
-  {
-    name: 'Бадигади',
-    type: 'Реинкарнация безработного',
-    desc: 'Император демонов и жених Киширики. Обладает огромной силой и добродушным характером.',
-    img: 'https://www.kino-teatr.ru/news/31346/281783.jpg'
-  }
     ];
-
     const container = document.getElementById('container');
-    const toggleFranksBtn = document.getElementById('toggleFranks');
-    const toggleReincarnationBtn = document.getElementById('toggleReincarnation');
-
-    let currentFilter = null; // null — показывает все кроме франксов и реинкарнации
+    const toggleBtn = document.getElementById('toggle');
+    let showMechas = false;
 
     function render() {
       container.innerHTML = '';
-
-      let filteredItems;
-
-      if (currentFilter === 'Франкс') {
-        filteredItems = items.filter(item => item.type === 'Франкс');
-      } else if (currentFilter === 'Реинкарнация безработного') {
-        filteredItems = items.filter(item => item.type === 'Реинкарнация безработного');
-      } else {
-        // Все, кроме франксов и реинкарнации
-        filteredItems = items.filter(item => item.type !== 'Франкс' && item.type !== 'Реинкарнация безработного');
-      }
-
-      filteredItems.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <img src="${item.img}" alt="${item.name}" />
-          <div class="info">
-            <h3>${item.name}</h3>
-            <p>${item.desc}</p>
-          </div>
-        `;
-        container.appendChild(card);
-      });
+      items
+        .filter(item => showMechas ? item.type === 'Франкс' : item.type !== 'Франкс')
+        .forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <img src="${item.img}" alt="${item.name}">
+            <div class="info">
+              <h3>${item.name}</h3>
+              <p>${item.desc}</p>
+            </div>
+          `;
+          container.appendChild(card);
+        });
     }
 
-    toggleFranksBtn.addEventListener('click', () => {
-      currentFilter = currentFilter === 'Франкс' ? null : 'Франкс';
-      toggleFranksBtn.textContent = currentFilter === 'Франкс' ? 'Показать персонажей' : 'Показать Франксы';
-      // Сбросим текст у другой кнопки, чтобы не путать пользователя
-      toggleReincarnationBtn.textContent = 'Показать Реинкарнацию безработного';
-      render();
-    });
-
-    toggleReincarnationBtn.addEventListener('click', () => {
-      currentFilter = currentFilter === 'Реинкарнация безработного' ? null : 'Реинкарнация безработного';
-      toggleReincarnationBtn.textContent = currentFilter === 'Реинкарнация безработного' ? 'Показать Любимый о франксе' : 'Показать Реинкарнацию безработного';
-      // Сбросим текст у другой кнопки
-      toggleFranksBtn.textContent = 'Показать Франксы';
+    toggleBtn.addEventListener('click', () => {
+      showMechas = !showMechas;
+      toggleBtn.textContent = showMechas ? 'Показать Персонажей' : 'Показать Франксы';
       render();
     });
 
